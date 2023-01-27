@@ -21,8 +21,7 @@
  * N_p(\bm{\mu}, \Sigma), \f]
  *
  * where \f$ (\bm{\mu}, \Sigma) \f$ are stored in a `State::UniLS` state.
- * The sufficient statistics stored are the sum of the \f$ \bm{y}_i \f$'s
- * and the sum of \f$ \bm{y}_i^T \bm{y}_i \f$.
+ * The sufficient statistic stored is the sum of the \f$ \bm{y}_i^T \bm{y}_i \f$.
  */
 
 class AR1Likelihood
@@ -39,13 +38,13 @@ class AR1Likelihood
     dim = dim_;
     clear_summary_statistics();
   };
-  //void set_state(const State &state_, bool update_card = true);
-
-  unsigned int get_dim() const { return dim; };
-  //Eigen::VectorXd get_data_sum() const { return data_sum; };
-  Eigen::MatrixXd get_data_sum_squares() const { return data_sum_squares; };
 
   void set_state(const State::UniLS &state_, bool update_card = true);
+
+  unsigned int get_dim() const { return dim; };
+
+  Eigen::MatrixXd get_data_sum_squares() const { return data_sum_squares; };
+
  protected:
   double compute_lpdf(const Eigen::RowVectorXd &datum) const override;
   void update_sum_stats(const Eigen::RowVectorXd &datum, bool add) override;
@@ -53,8 +52,6 @@ class AR1Likelihood
   unsigned int dim;
   //this matrix is useful to calculate A,B,C
   Eigen::MatrixXd data_sum_squares;
-  //Eigen::MatrixXd prec;
-  //Eigen::matrixXd prec_chol;
 
   Eigen::VectorXd mean;
   Eigen::MatrixXd prec_chol;

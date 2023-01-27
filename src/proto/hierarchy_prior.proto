@@ -124,15 +124,6 @@ message PythonHierPrior{
   }
 }
 
-/*
-message MNNIGPrior{
-  oneof prior {
-    NIGDistribution fixed_values = 1; // no prior, just fixed values
-    //MultiNormalMeanPrior normal_mean_prior = 2; // prior on the mean
-  }
-}
-*/
-
 message AR1NIGPrior{
   oneof prior {
     NIGDistribution fixed_values = 1; // no prior, just fixed values

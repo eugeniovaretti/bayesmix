@@ -1,12 +1,3 @@
-// Problema!
-// dirichlet_mixing non fa l'override di is_dependent(), quindi è settato a false
-// -> 1.non viene letto il file delle coordinate in run_mcmc.cc
-// -> 2.bisognerebbe modificare il message protobuf per includere il
-//      parametro a della nostra EPPF -> non bene!
-// -> per non sputtanare tutto, le idee sono:
-// 1) creare nuovo mixing dirichlet_c2_mixing ("facile")
-//   -> !!! andare a modificare i Template in cui compare Mixing=Dirichlet (se appaiono)
-// 2) estendere inheritando (non so come si fa!)
 #ifndef BAYESMIX_MIXINGS_DIRICHLET_C2_MIXING_H_
 #define BAYESMIX_MIXINGS_DIRICHLET_C2_MIXING_H_
 
@@ -29,18 +20,21 @@ struct State {
 
 /**
  * Class that represents the EPPF induced by the Dirithclet process (DP)
- * introduced in Ferguson (1973), see also Sethuraman (1994).
- * The EPPF induced by the DP depends on a `totalmass` parameter M.
+ * introduced in Ferguson (1973), see also Sethuraman (1994) and a Cohesion function,
+ * C2, introduced in Quintana-Page (2016), that is:
+ * SCRIVI FORMULA
+ * The EPPF induced by the DP depends on a `totalmass` parameter M, and a
+ * distance parameter "a".
  * Given a clustering of n elements into k clusters, each with cardinality
  * \f$ n_j, j=1, ..., k \f$ the EPPF of the DP gives the following
  * probabilities for the cluster membership of the (n+1)-th observation:
  *
- * \f[
+ * \f[ **SCRIVI FORMULA
  *    p(\text{j-th cluster} | ...) &= n_j / (n + M) \\
  *    p(\text{new cluster} | ...) &= M / (n + M)
  * \f]
  *
- * The state is solely composed of M, but we also store log(M) for efficiency
+ * The state is composed of M and a, but we also store log(M) for efficiency
  * reasons. For more information about the class, please refer instead to base
  * classes, `AbstractMixing` and `BaseMixing`.
  */

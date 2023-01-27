@@ -6,7 +6,7 @@
 #include "src/hierarchies/priors/nig_prior_model.h"
 
 /**
- * Updater specific for the `MultiNormLikelihood` used in combination
+ * Updater specific for the `AR1Likelihood` used in combination
  * with `NIGPriorModel`, that is the model
  *
  * \f[

@@ -31,7 +31,6 @@ AbstractUpdater::ProtoHypersPtr AR1NIGUpdater::compute_posterior_hypers(
   double b_p = hypers.var_scaling * hypers.mean + data_sum_squares.diagonal(1).sum();
   double c_p = hypers.var_scaling * (hypers.mean * hypers.mean) + data_sum_squares.trace();
 
-  // da controllare effettivamente che hypers.proto non venga sovrascritto
   mean = b_p/a_p;
   var_scaling = a_p;
   shape = hypers.shape + 0.5 * card * dim ;

@@ -21,26 +21,6 @@ void DirichletC2Mixing::update_state(
   if (priorcast->has_fixed_value()) {
     return;
   }
-/*
-  else if (priorcast->has_gamma_prior()) {
-    // Recover parameters
-    unsigned int k = unique_values.size();
-    double alpha = priorcast->gamma_prior().totalmass_prior().shape();
-    double beta = priorcast->gamma_prior().totalmass_prior().rate();
-    // Update state (see Neal (2000) for details)
-    double phi = stan::math::gamma_rng(state.totalmass + 1, n, rng);
-    double odds = (alpha + k - 1) / (n * (beta - log(phi)));
-    double prob = odds / (1 + odds);
-    double p = stan::math::uniform_rng(0.0, 1.0, rng);
-    if (p <= prob) {
-      state.totalmass = stan::math::gamma_rng(alpha + k, beta - log(phi), rng);
-    } else {
-      state.totalmass =
-          stan::math::gamma_rng(alpha + k - 1, beta - log(phi), rng);
-    }
-  }
-  */
-
   else {
     throw std::invalid_argument("Unrecognized mixing prior");
   }
@@ -53,17 +33,13 @@ double DirichletC2Mixing::mass_existing_cluster(
     const bool propto, const std::shared_ptr<AbstractHierarchy> hier,
     const Eigen::RowVectorXd &covariate) const {
   double out;
-  // suppongo che un parametro in proto sia "a" (distanza hard boundary)
-  // implemento hard boundary
+  // flag on the closeness
   bool is_near = 1;
   unsigned n_data_clus = covariates_ptr->rows();
   for(size_t i = 0; i < n_data_clus; ++i)
   {
-    // funzione che calcola distanza tra due RowVectorXd (forse il primo
-    // è da converitre a vettore)
     if((covariates_ptr->row(i)-covariate).norm() > state.a)
     {
-      //std::cout << "The unit is far from datum " << i << std::endl;
       is_near = 0;
       break;
     }
@@ -131,22 +107,6 @@ void DirichletC2Mixing::initialize_state() {
       throw std::invalid_argument("Distance parameter a must be > 0");
     }
   }
-/*
-  else if (priorcast->has_gamma_prior()) {
-    double alpha = priorcast->gamma_prior().totalmass_prior().shape();
-    double beta = priorcast->gamma_prior().totalmass_prior().rate();
-    if (a <= 0) {
-      throw std::invalid_argument("Distance parameter a must be > 0");
-    }
-    if (alpha <= 0) {
-      throw std::invalid_argument("Shape parameter must be > 0");
-    }
-    if (beta <= 0) {
-      throw std::invalid_argument("Rate parameter must be > 0");
-    }
-    state.totalmass = alpha / beta;
-  }
-*/
   else {
     throw std::invalid_argument("Unrecognized mixing prior");
   }

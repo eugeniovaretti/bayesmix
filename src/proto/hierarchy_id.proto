@@ -14,6 +14,5 @@ enum HierarchyId {
     FA = 5; // Factor Analysers
     NNxIG = 6; // Normal - Normal x Inverse Gamma
     PythonHier = 7; // Generic python hierarchy
-    //MNNIG = 8; // MultiNormal - Normal Inverse Gamma
     AR1NIG = 8; // Autoregressive1 - Normal Inverse Gamma
 }

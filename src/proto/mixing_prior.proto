@@ -98,6 +98,5 @@ message TruncSBPrior {
  message DPC2Prior {
    oneof totalmass {
      DPC2State fixed_value = 1; // No prior, just a fixed value
-     //GammaPrior gamma_prior = 2; // Gamma prior on the total mass
    }
  }
