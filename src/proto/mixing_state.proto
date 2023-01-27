@@ -43,6 +43,15 @@ message MFMState {
 }
 
 /*
+ * State of a DirichletC2 process
+ */
+message DPC2State {
+  double totalmass = 1; // the total mass of the DP
+  double a = 2; // the value a for the distance
+}
+
+
+/*
  * Wrapper of all possible mixing states into a single oneof
  */
 message MixingState {
@@ -53,5 +62,6 @@ message MixingState {
     TruncSBState trunc_sb_state = 4;
     MFMState mfm_state = 5;
     Vector general_state = 6;
+    DPC2State dpc2_state = 7;
   }
 }

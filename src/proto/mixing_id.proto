@@ -13,4 +13,5 @@ enum MixingId {
     TruncSB = 4; // Truncated Stick-Breaking Process
     MFM = 5; // Mixture of finite mixtures
     PythonMix = 6; // Generic python mixing
+    DPC2 = 7; // Dirichlet Process with cohesion function C2
 }

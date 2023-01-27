@@ -3,6 +3,8 @@ target_sources(bayesmix
     base_mixing.h
     dirichlet_mixing.h
     dirichlet_mixing.cc
+    dirichlet_c2_mixing.h
+    dirichlet_c2_mixing.cc
     logit_sb_mixing.cc
     logit_sb_mixing.h
     mixture_finite_mixing.cc

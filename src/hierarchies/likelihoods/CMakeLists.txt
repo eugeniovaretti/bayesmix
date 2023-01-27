@@ -12,6 +12,8 @@ target_sources(bayesmix PUBLIC
     laplace_likelihood.cc
     fa_likelihood.h
     fa_likelihood.cc
+    ar1_likelihood.h
+    ar1_likelihood.cc
 )
 
 add_subdirectory(states)

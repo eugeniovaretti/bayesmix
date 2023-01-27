@@ -91,3 +91,13 @@ message TruncSBPrior {
   }
   uint32 num_components = 4; // Number of components in the process
 }
+
+/*
+ * Definition of the parameters of a cov-dependent (C2) Dirichlet Process
+ */
+ message DPC2Prior {
+   oneof totalmass {
+     DPC2State fixed_value = 1; // No prior, just a fixed value
+     //GammaPrior gamma_prior = 2; // Gamma prior on the total mass
+   }
+ }

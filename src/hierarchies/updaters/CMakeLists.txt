@@ -15,4 +15,6 @@ target_sources(bayesmix PUBLIC
     mala_updater.h
     random_walk_updater.h
     target_lpdf_unconstrained.h
+    ar1nig_updater.h
+    ar1nig_updater.cc
 )

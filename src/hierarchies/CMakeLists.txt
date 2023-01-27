@@ -8,6 +8,7 @@ target_sources(bayesmix
     lin_reg_uni_hierarchy.h
     fa_hierarchy.h
     lapnig_hierarchy.h
+    ar1nig_hierarchy.h
 )
 
 add_subdirectory(likelihoods)

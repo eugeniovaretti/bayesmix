@@ -6,6 +6,7 @@
 
 #include "abstract_mixing.h"
 #include "dirichlet_mixing.h"
+#include "dirichlet_c2_mixing.h"
 #include "logit_sb_mixing.h"
 #include "mixture_finite_mixing.h"
 #include "pityor_mixing.h"
@@ -38,12 +39,17 @@ __attribute__((constructor)) static void load_mixings() {
   Builder<AbstractMixing> TruncSBbuilder = []() {
     return std::make_shared<TruncatedSBMixing>();
   };
+  Builder<AbstractMixing> DPC2builder = []() {
+    return std::make_shared<DirichletC2Mixing>();
+  };
 
   factory.add_builder(DirichletMixing().get_id(), DPbuilder);
   factory.add_builder(LogitSBMixing().get_id(), LogSBbuilder);
   factory.add_builder(MixtureFiniteMixing().get_id(), MFMbuilder);
   factory.add_builder(PitYorMixing().get_id(), PYbuilder);
   factory.add_builder(TruncatedSBMixing().get_id(), TruncSBbuilder);
+  factory.add_builder(DirichletC2Mixing().get_id(), DPC2builder);
+
 }
 
 #endif  // BAYESMIX_MIXINGS_LOAD_MIXINGS_H_
