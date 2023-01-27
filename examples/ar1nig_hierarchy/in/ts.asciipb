@@ -1,0 +1,8 @@
+fixed_values {
+	    #Automatic initialization if size of parameters is 0. Use the syntax below to set hyperparameters manually.
+      
+      mean : 0.4633
+      var_scaling: 11338
+      shape: 9.5587
+      scale: 773.9
+}
