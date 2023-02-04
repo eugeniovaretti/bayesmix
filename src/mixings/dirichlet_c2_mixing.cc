@@ -35,8 +35,8 @@ double DirichletC2Mixing::mass_existing_cluster(
   double out;
   // flag on the closeness
   bool is_near = 1;
-  unsigned n_data_clus = covariates_ptr->rows();
-  for(size_t i = 0; i < n_data_clus; ++i)
+  std::set<int> index_clusters = hier->get_data_idx();
+  for(const auto i : index_clusters)
   {
     if((covariates_ptr->row(i)-covariate).norm() > state.a)
     {
