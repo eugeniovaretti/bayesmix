@@ -99,6 +99,11 @@ int main(int argc, char *argv[]) {
           "(Optional) Where to store the best cluster allocation found by "
           "minimizing the Binder loss function over the visited partitions");
 
+  args.add_argument("--clus-state-params-file")
+      .default_value(EMPTYSTR)
+      .help(
+          "(Optional) Where to store the cluster specific state parameters");
+
   args.add_argument("--hier-cov-file")
       .default_value(EMPTYSTR)
       .help(
@@ -127,6 +132,7 @@ int main(int argc, char *argv[]) {
           "empty. "
           "Path to a csv file with the values covariates used in the mixing "
           "on which to evaluate the (log) predictive density");
+
 
   std::cout << "Running run_mcmc.cc" << std::endl;
 
@@ -220,9 +226,11 @@ int main(int argc, char *argv[]) {
   }
 
   if (args["--n-cl-file"] != EMPTYSTR || args["--clus-file"] != EMPTYSTR ||
-      args["--best-clus-file"] != EMPTYSTR) {
+      args["--best-clus-file"] != EMPTYSTR || args["--clus-state-params-file"] != EMPTYSTR) {
     Eigen::MatrixXi clusterings(coll->get_size(), data.rows());
     Eigen::VectorXi num_clust(coll->get_size());
+    // create matrix to collect cluster_state_param:
+    Eigen::MatrixXd cluster_state = Eigen::MatrixXd::Zero(coll->get_size(),data.rows());
     for (int i = 0; i < coll->get_size(); i++) {
       bayesmix::AlgorithmState state;
       coll->get_next_state(&state);
@@ -230,6 +238,16 @@ int main(int argc, char *argv[]) {
         clusterings(i, j) = state.cluster_allocs(j);
       }
       num_clust(i) = state.cluster_states_size();
+
+      // read the cluster-specfic parameters:
+      const google::protobuf::RepeatedPtrField<bayesmix::AlgorithmState_ClusterState>& repeated_field = state.cluster_states();
+      for (int j = 0; j < repeated_field.size(); j++) {
+          const bayesmix::AlgorithmState_ClusterState& cluster_state_j = repeated_field.Get(j);
+          // process cluster_state_j
+          double value = cluster_state_j.uni_ls_state().mean();
+          cluster_state(i,j) = value;
+      }
+
     }
     coll->reset();
 
@@ -253,6 +271,13 @@ int main(int argc, char *argv[]) {
           best_clus, args.get<std::string>("--best-clus-file"));
       std::cout << "Successfully wrote best cluster allocations to "
                 << args.get<std::string>("--best-clus-file") << std::endl;
+    }
+
+    if(args["--clus-state-params-file"] != EMPTYSTR) {
+      bayesmix::write_matrix_to_file(cluster_state,
+                                     args.get<std::string>("--clus-state-params-file"));
+      std::cout << "Successfully wrote cluster state parameters to "
+                << args.get<std::string>("--clus-state-params-file") << std::endl;
     }
   }
 

@@ -1,6 +1,6 @@
 fixed_values {
 	    #Automatic initialization if size of parameters is 0. Use the syntax below to set hyperparameters manually.
-
+      #Hyperparameters NIG for Lombardy data
       mean : 0.6111013
       var_scaling: 6497.971
       shape: 13.17624

@@ -1,0 +1,8 @@
+fixed_values {
+	    #Automatic initialization if size of parameters is 0. Use the syntax below to set hyperparameters manually.
+      #Hyperparams for the NIG prior EmiliaRom+Lombardia data
+      mean : 0.5304538
+      var_scaling: 3477.516
+      shape: 13.47687
+      scale: 1022.234
+}
