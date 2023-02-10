@@ -45,8 +45,7 @@ class AR1NIGHierarchy
   //! Initializes state parameters to appropriate values
   void initialize_state() override {
     // Initialize likelihood dimension to the time series length
-    // this two rows can be written in the set_state Likelihood
-    unsigned int ts_length = 52;
+    unsigned int ts_length = like.get_dataset()->cols();
     like->set_dim(ts_length);
 
     // Get hypers
