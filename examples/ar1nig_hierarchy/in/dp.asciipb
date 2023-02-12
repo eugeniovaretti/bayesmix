@@ -1,4 +1,4 @@
 fixed_value {
-  totalmass: 1
-  a: 1.0
+  totalmass: 0.56
+  a: 135
 }
