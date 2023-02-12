@@ -95,4 +95,7 @@ class DirichletC2Mixing
   void initialize_state() override;
 };
 
+//! Compute the haversine formula between two points (expressed in latitude and longitude in this order)
+double haversine_formula(const Eigen::RowVectorXd& point1, const Eigen::RowVectorXd& point2);
+
 #endif  // BAYESMIX_MIXINGS_DIRICHLET_C2_MIXING_H_

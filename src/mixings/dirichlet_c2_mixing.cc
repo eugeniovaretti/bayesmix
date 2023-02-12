@@ -38,7 +38,7 @@ double DirichletC2Mixing::mass_existing_cluster(
   std::set<int> index_clusters = hier->get_data_idx();
   for(const auto i : index_clusters)
   {
-    if((covariates_ptr->row(i)-covariate).norm() > state.a)
+    if(haversine_formula(covariates_ptr->row(i),covariate) > state.a)
     {
       is_near = 0;
       break;
@@ -110,4 +110,28 @@ void DirichletC2Mixing::initialize_state() {
   else {
     throw std::invalid_argument("Unrecognized mixing prior");
   }
+}
+
+// This function compute the haversine formula (distance in km) between two points
+// given as a vector (lat,lon)
+double haversine_formula(const Eigen::RowVectorXd& point1, const Eigen::RowVectorXd& point2)
+{
+  // check if the coordinate is bidimensional
+  if(point1.cols() != 2 || point2.cols() != 2)
+  {
+    std::cerr << "Coordinates are not in the right format!" << std::endl;
+  }
+  const double earth_radius = 6371.0;
+  double lat1 = point1(0) * M_PI / 180.0;
+  double lat2 = point2(0) * M_PI / 180.0;
+  double delta_lat = (lat2 - lat1);
+  double delta_long = (point2(1) - point1(1)) * M_PI / 180.0;
+
+  double a = std::sin(delta_lat / 2.0) * std::sin(delta_lat / 2.0) +
+           std::cos(lat1) * std::cos(lat2) *
+           std::sin(delta_long / 2.0) * std::sin(delta_long / 2.0);
+
+  double c = 2 * std::atan2(std::sqrt(a), std::sqrt(1 - a));
+
+  return earth_radius * c;
 }
